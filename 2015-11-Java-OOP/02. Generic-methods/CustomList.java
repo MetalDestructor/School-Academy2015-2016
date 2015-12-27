@@ -11,12 +11,13 @@ public class CustomList<T> {
 	}
 
 	public void addElement(T element) {
-		customLi.add(element);
 		if (customLi.size() - ((customLi.size() * (1 / 4)) + 1) == customLi.indexOf(element)) {
 			size = size * 2;
+			T[] tempLi = (T[]) customLi.toArray();
 			customLi = new ArrayList<T>(size);
+			customLi.add((T) tempLi);
 		}
-
+		customLi.add(element);
 	}
 
 	public T accessElement(int index) {
@@ -50,15 +51,23 @@ public class CustomList<T> {
 	public int findElement(T value) {
 		return customLi.indexOf(value);
 	}
+	
+	public int length() {
+		return customLi.size();
+	}
 
 	@Override
 	public String toString() {
-		return super.toString();
+		for (T t : customLi) {
+			System.out.print(customLi.indexOf(t) + ":");
+			System.out.println(t);
+		}
+		return "";
 	}
 
 	public <T extends Number> T Min() {
-		Double min = ((Number) customLi.get(0)).doubleValue();
-		for (int i = 0; i < customLi.size(); i++) {
+		Double min = ((Number) customLi.get(1)).doubleValue();
+		for (int i = 1; i <= customLi.size(); i++) {
 			Double current = ((Number) customLi.get(i)).doubleValue();
 			if (current < min) {
 				min = current;
@@ -70,8 +79,8 @@ public class CustomList<T> {
 	}
 
 	public <T extends Number> T Max() {
-		Double max = ((Number) customLi.get(0)).doubleValue();
-		for (int i = 0; i < customLi.size(); i++) {
+		Double max = ((Number) customLi.get(1)).doubleValue();
+		for (int i = 1; i <= customLi.size(); i++) {
 			Double current = ((Number) customLi.get(i)).doubleValue();
 			if (current > max) {
 				max = current;
